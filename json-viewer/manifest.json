@@ -1,0 +1,19 @@
+{
+    "name": "json pretty printer",
+    "manifest_version": 2,
+    "minimum_chrome_version": "18",
+    "version": "0.0.1",
+    "description": "Pretty print responses with Content-Type suffixed with +json.",
+
+    "homepage_url": "https://github.com/bhenderson/chrome-json-viewer",
+		"content_scripts": [{
+			"matches": ["http://*/*", "https://*/*", "ftp://*/*", "file:///*"],
+			"js": ["json-viewer.js"],
+			"run_at" : "document_end",
+			"all_frames" : true
+		}],
+		"web_accessible_resources": [
+			"json-viewer.css"
+		],
+		"permissions" : ["clipboardWrite", "http://*/", "contextMenus", "https://*/", "ftp://*/"]
+}
