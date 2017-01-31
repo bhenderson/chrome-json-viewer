@@ -4,7 +4,6 @@ javascript:(
       var div = this.querySelector("div");
       if (!div) return;
       event.stopPropagation();
-      if (window.getSelection().toString()) return;
 
       this.isHidden = !this.isHidden;
       if (this.isHidden) {
@@ -64,7 +63,7 @@ javascript:(
       };
 
       if (e.tagName === "DIV") {
-        e.onclick = collapsible.bind(e);
+        e.ondblclick = collapsible.bind(e);
       }
 
       return e;
@@ -104,10 +103,6 @@ javascript:(
         return span;
       }
 
-      span.onclick = function(e) {
-        e.stopPropagation();
-      };
-
       if (typeof obj === "string" && obj.match("^https?://")) {
         var alink = create("a", {className: klass, href: obj})
           .inner_text(obj);
@@ -123,24 +118,33 @@ javascript:(
       return span;
     };
 
-    document.head.innerHTML = "" +
-    "  <style>                 " +
-    "    div {                 " +
-    "      margin-left: 10px;  " +
-    "    }                     " +
-    "    .type-boolean {       " +
-    "      color: red;         " +
-    "    }                     " +
-    "    .type-string {        " +
-    "      color: green;       " +
-    "    }                     " +
-    "    .type-number {        " +
-    "      color: blue;        " +
-    "    }                     " +
-    "    .type-null {          " +
-    "      color: gray;        " +
-    "    }                     " +
-    "  </style>                " +
+    document.head.innerHTML = "                                      " +
+    "  <style>                                                       " +
+    "    div {                                                       " +
+    "      margin-left: 10px;                                        " +
+    "    }                                                           " +
+    "    .hoverable {                                                " +
+    "      transition: background-color .2s ease-out 0s;             " +
+    "      -webkit-transition: background-color .2s ease-out 0s;     " +
+    "    }                                                           " +
+    "    .hovered {                                                  " +
+    "      transition-delay: .2s;                                    " +
+    "      -webkit-transition-delay: .2s;                            " +
+    "      background: #AED6F1;                                      " +
+    "    }                                                           " +
+    "    .type-boolean {                                             " +
+    "      color: red;                                               " +
+    "    }                                                           " +
+    "    .type-string {                                              " +
+    "      color: green;                                             " +
+    "    }                                                           " +
+    "    .type-number {                                              " +
+    "      color: blue;                                              " +
+    "    }                                                           " +
+    "    .type-null {                                                " +
+    "      color: gray;                                              " +
+    "    }                                                           " +
+    "  </style>                                                      " +
     "";
 
     window.json = JSON.parse(document.body.innerText);
