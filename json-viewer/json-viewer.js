@@ -119,7 +119,7 @@ javascript:(
       var text = JSON.stringify(obj);
       if (typeof obj === "string" && obj.match("^https?://")) {
         var alink = create("a", {className: klass, href: obj})
-          .inner(text.slice(1, text.length-2));
+          .inner(text.slice(1, text.length-1));
         span
           .inner('"')
           .inner(alink)
