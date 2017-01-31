@@ -1,11 +1,34 @@
 javascript:(
   function (){
+    var addClass = function(e, klass) {
+      var classes = e.className.split(/\s+/);
+      var index = classes.indexOf(klass);
+      if (index < 0) {
+        classes.push(klass);
+        e.className = classes.join(" ");
+      }
+    };
+
+    var removeClass = function(e, klass) {
+      var classes = e.className.split(/\s+/);
+      var index = classes.indexOf(klass);
+      if (index > -1) {
+        classes.splice(index, 1);
+        e.className = classes.join(" ");
+      }
+    };
+
     var collapsible = function(event) {
       var div = this.querySelector("div");
       event.stopPropagation();
       if (!div) return;
 
       this.isHidden = !this.isHidden;
+      if (this.isHidden) {
+        addClass(this, "hidden");
+      } else {
+        removeClass(this, "hidden");
+      }
       while (div.nodeName === "DIV") {
         div.hidden = this.isHidden;
         div = div.nextSibling;
@@ -58,9 +81,10 @@ javascript:(
       };
 
       if (e.tagName === "DIV") {
+        addClass(e, "hoverable");
         e.ondblclick = collapsible.bind(e);
-        e.onmouseover = function(ev) { ev.stopPropagation(); e.className = "hoverable hovered"; };
-        e.onmouseout = function(ev) { ev.stopPropagation(); e.className = "hoverable"; };
+        e.onmouseover = function(ev) { ev.stopPropagation(); addClass(e, "hovered"); };
+        e.onmouseout = function(ev) { ev.stopPropagation(); removeClass(e, "hovered"); };
       }
 
       return e;
