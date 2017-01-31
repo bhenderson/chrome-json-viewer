@@ -61,15 +61,12 @@ javascript:(
           e[key] = props[key];
         });
       }
-      e.inner_text = function(obj) {
-        return e.inner(document.createTextNode(obj));
-      };
       e.inner = function(obj) {
-        e.appendChild(obj);
+        e.append(obj);
         return e;
       };
       e.addTail = function(add) {
-        if (add) e.inner_text(",");
+        if (add) e.inner(",");
         return e;
       };
       e.loop = function(obj, callback) {
@@ -99,7 +96,7 @@ javascript:(
     var createObjectElem = function(val, key, last) {
       return create("div")
         .inner(parse(key, "key"))
-        .inner_text(":  ")
+        .inner(":  ")
         .inner(parse(val))
         .addTail(!last);
     };
@@ -110,30 +107,31 @@ javascript:(
 
       if (Array.isArray(obj)) {
         span
-          .inner_text("[")
+          .inner("[")
           .loop(obj, createArrayElem)
-          .inner_text("]");
+          .inner("]");
         return span;
       }
 
       if (typeof obj === "object" && obj !== null) {
         span
-          .inner_text("{")
+          .inner("{")
           .loop(obj, createObjectElem)
-          .inner_text("}");
+          .inner("}");
         return span;
       }
 
+      var text = JSON.stringify(obj);
       if (typeof obj === "string" && obj.match("^https?://")) {
         var alink = create("a", {className: klass, href: obj})
-          .inner_text(obj);
+          .inner(text.slice(1, text.length-2));
         span
-          .inner_text('"')
+          .inner('"')
           .inner(alink)
-          .inner_text('"');
+          .inner('"');
       } else {
         span
-          .inner_text(JSON.stringify(obj));
+          .inner(text);
       }
 
       return span;
