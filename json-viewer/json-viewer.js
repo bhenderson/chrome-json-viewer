@@ -38,19 +38,17 @@ javascript:(
     var loop = function(obj, callback) {
       if (Array.isArray(obj)) {
         var len = obj.length - 1;
-        obj.forEach(function(val, idx) {
-          callback(val, idx, idx === len);
+        return obj.map(function(val, idx) {
+          return callback(val, idx, idx === len);
         });
-        return;
       }
       if (typeof obj === "object") {
         var keys = Object.keys(obj);
         var len = keys.length - 1;
-        keys.forEach(function(key, idx) {
+        return keys.map(function(key, idx) {
           var val = obj[key];
-          callback(val, key, idx === len);
+          return callback(val, key, idx === len);
         });
-        return;
       }
     };
 
@@ -70,10 +68,7 @@ javascript:(
         return e;
       };
       e.loop = function(obj, callback) {
-        var innerLoop = function(val, key, last) {
-          e.inner(callback(val, key, last));
-        };
-        loop(obj, innerLoop);
+        e.append.apply(e, loop(obj, callback));
         return e;
       };
 
@@ -169,6 +164,6 @@ javascript:(
     window.json = JSON.parse(document.body.innerText);
     var data = create("div").inner(parse(window.json));
     document.body.innerHTML = "";
-    document.body.appendChild(data);
+    document.body.append(data);
   }
 )()
