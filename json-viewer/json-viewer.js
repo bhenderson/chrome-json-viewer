@@ -133,11 +133,12 @@ function parse(obj, klass) {
 }
 
 function extractData(raw) {
-  if (raw.charAt(0) == '{' && raw.charAt(raw.length-1) == '}') return raw;
-  if (raw.charAt(0) == '[' && raw.charAt(raw.length-1) == ']') return raw;
+  // w00t!
+  if ((raw.charAt(0) == '{' && raw.charAt(raw.length-1) == '}') || (raw.charAt(0) == '[' && raw.charAt(raw.length-1) == ']'))
+    try { return JSON.parse(raw); } catch (e) { }
 }
 
-function init() {
+function init(data) {
   var style = create("link", {
     type: "text/css",
     rel: "stylesheet",
@@ -145,7 +146,7 @@ function init() {
     media: "all"
   });
   document.head.append(style);
-  window.json = JSON.parse(document.body.innerText);
+  window.json = data;
   var data = create("div").inner(parse(window.json));
   document.body.innerHTML = "";
   document.body.append(data);
