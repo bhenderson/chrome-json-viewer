@@ -2,15 +2,10 @@ javascript:(
   function (){
     var collapsible = function(event) {
       var div = this.querySelector("div");
-      if (!div) return;
       event.stopPropagation();
+      if (!div) return;
 
       this.isHidden = !this.isHidden;
-      if (this.isHidden) {
-        this.className = "collapsible hidden";
-      } else {
-        this.className = "collapsible";
-      }
       while (div.nodeName === "DIV") {
         div.hidden = this.isHidden;
         div = div.nextSibling;
@@ -64,6 +59,8 @@ javascript:(
 
       if (e.tagName === "DIV") {
         e.ondblclick = collapsible.bind(e);
+        e.onmouseover = function(ev) { ev.stopPropagation(); e.className = "hoverable hovered"; };
+        e.onmouseout = function(ev) { ev.stopPropagation(); e.className = "hoverable"; };
       }
 
       return e;
@@ -124,12 +121,12 @@ javascript:(
     "      margin-left: 10px;                                        " +
     "    }                                                           " +
     "    .hoverable {                                                " +
-    "      transition: background-color .2s ease-out 0s;             " +
-    "      -webkit-transition: background-color .2s ease-out 0s;     " +
+    "      transition: background-color .0s ease-out 0s;             " +
+    "      -webkit-transition: background-color .0s ease-out 0s;     " +
     "    }                                                           " +
     "    .hovered {                                                  " +
-    "      transition-delay: .2s;                                    " +
-    "      -webkit-transition-delay: .2s;                            " +
+    "      transition-delay: .0s;                                    " +
+    "      -webkit-transition-delay: .0s;                            " +
     "      background: #AED6F1;                                      " +
     "    }                                                           " +
     "    .type-boolean {                                             " +
