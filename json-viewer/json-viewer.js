@@ -134,6 +134,7 @@ function parse(obj, klass) {
 
 function extractData(raw) {
   // w00t!
+  raw = raw.trim()
   if ((raw.charAt(0) == '{' && raw.charAt(raw.length-1) == '}') || (raw.charAt(0) == '[' && raw.charAt(raw.length-1) == ']'))
     try { return JSON.parse(raw); } catch (e) { }
 }
