@@ -134,8 +134,9 @@ function parse(obj, klass) {
 
 function extractData(raw) {
   // w00t!
-  raw = raw.trim()
-  if ((raw.charAt(0) == '{' && raw.charAt(raw.length-1) == '}') || (raw.charAt(0) == '[' && raw.charAt(raw.length-1) == ']'))
+  var f = raw.charAt(0),
+      l = raw.charAt(raw.length-1);
+  if ((f == '{' && l == '}') || (f == '[' && l == ']'))
     try { return JSON.parse(raw); } catch (e) { }
 }
 
@@ -154,13 +155,9 @@ function init(data) {
 }
 
 function load() {
-	var child, data;
-	if (document.body && (document.body.childNodes[0] && document.body.childNodes[0].tagName == "PRE" || document.body.children.length == 0)) {
-		child = document.body.children.length ? document.body.childNodes[0] : document.body;
-		data = extractData(child.innerText);
-		if (data)
-			init(data);
-	}
+  var data = extractData(document.body.innerText.trim());
+  if (data)
+    init(data);
 }
 
 load();

@@ -15,5 +15,8 @@
 		"web_accessible_resources": [
 			"json-viewer.css"
 		],
-		"permissions" : ["clipboardWrite", "http://*/", "contextMenus", "https://*/", "ftp://*/"]
+		"permissions" : ["clipboardWrite", "http://*/", "contextMenus", "https://*/", "ftp://*/"],
+		"background": {
+			"scripts": ["json-viewer.js"]
+		}
 }
