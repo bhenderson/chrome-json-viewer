@@ -96,23 +96,36 @@ function createObjectElem(val, key, last) {
     .addTail(!last);
 }
 
+function length(obj) {
+  if (typeof obj === "object" && obj) {
+    return Object.keys(obj).length;
+  }
+  if (typeof obj.length !== "undefined") {
+    return obj.length;
+  }
+}
+
+function tooltip(inner, tip) {
+  return create("span", {title: tip}).inner(inner);
+}
+
 function parse(obj, klass) {
-  if (!klass) var klass = ("type-" + (obj === null ? "null" : typeof obj));
+  if (!klass) klass = ("type-" + (obj === null ? "null" : typeof obj));
   var span = create("span", {className: klass});
 
   if (Array.isArray(obj)) {
     span
-      .inner("[")
+      .inner(tooltip("[", length(obj)))
       .loop(obj, createArrayElem)
-      .inner("]");
+      .inner(tooltip("]", length(obj)))
     return span;
   }
 
   if (typeof obj === "object" && obj !== null) {
     span
-      .inner("{")
+      .inner(tooltip("{", length(obj)))
       .loop(obj, createObjectElem)
-      .inner("}");
+      .inner(tooltip("}", length(obj)))
     return span;
   }
 
